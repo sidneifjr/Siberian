@@ -8,7 +8,7 @@ const customSlider = sliderOptions => {
 	let counter = 0;
 
 	let numberOfItens = sliderOptions.amountOfItens || 1;
-	// let mobileSize = window.matchMedia(sliderOptions.breakpoint);
+	let mobileSize = window.matchMedia(sliderOptions.breakpoint);
 
 	// Pega todos os siblings do elemento desejado.
 	const getSiblings = elem => {
