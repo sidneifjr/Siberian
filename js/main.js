@@ -1,8 +1,8 @@
 // Siberian.
 const customSlider = sliderOptions => {
 	let slider = document.querySelector(sliderOptions.selector);
-	let sliderWrapper = slider.querySelector('.custom-slider-content');
-	let slides = sliderWrapper.querySelectorAll('.custom-slider-content-item');
+	let sliderWrapper = slider.querySelector('.siberian-content');
+	let slides = sliderWrapper.querySelectorAll('.siberian-content-item');
 	let sliderLength = slides.length; // quantidade de itens no slider.
 	let sliderWidth = slider.getBoundingClientRect().width; // reflete a largura de tela ocupada no momento.
 	let counter = 0;
@@ -205,7 +205,7 @@ const customSlider = sliderOptions => {
 	// 		console.log(percentage);
 
 	// 		// aplicando o transform em cada item.
-	// 		sliderWrapper.querySelectorAll('.custom-slider-content-item').forEach(item =>{
+	// 		sliderWrapper.querySelectorAll('.siberian-content-item').forEach(item =>{
 	// 			item.style.transform = `translate3d(${percentage}%, 0, 0)`;
 	// 		});
 
@@ -306,7 +306,7 @@ const customSlider = sliderOptions => {
 }
 
 const sliderOptions = {
-	selector: '.custom-slider',
+	selector: '.siberian',
 	breakpoint: 'max-width(480px)',
 	amountOfItens: 1,
 	hasArrows: true,
