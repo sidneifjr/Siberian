@@ -1,6 +1,6 @@
 # Siberean
 
-A simple slider, built in vanilla Javascript.
+A simple slider, built with vanilla Javascript.
 
 ## Installation
 
