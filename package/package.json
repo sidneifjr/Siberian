@@ -1,6 +1,6 @@
 {
   "name": "siberian",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Custom slider, using vanilla Javascript.",
   "main": "main.js",
   "scripts": {
@@ -18,5 +18,5 @@
   "bugs": {
     "url": "https://github.com/sidneifjr/Siberian/issues"
   },
-  "homepage": "https://github.com/sidneifjr/Siberian#readme"
+  "homepage": "https://github.com/sidneifjr/Siberian"
 }
