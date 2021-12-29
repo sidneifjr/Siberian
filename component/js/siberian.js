@@ -1,16 +1,16 @@
-// Siberian.
-const customSlider = sliderOptions => {
+const siberian = sliderOptions => {
 	let slider = document.querySelector(sliderOptions.selector);
-	let sliderWrapper = slider.querySelector('.siberian-content');
-	let slides = sliderWrapper.querySelectorAll('.siberian-content-item');
-	let sliderLength = slides.length; // quantidade de itens no slider.
-	let sliderWidth = slider.getBoundingClientRect().width; // reflete a largura de tela ocupada no momento.
+	let sliderWrapper = slider.querySelector(sliderOptions.selectorWrapper);
+	let slides = Array.from(sliderWrapper.querySelectorAll('.siberian-content-item'));
+	let sliderLength = slides.length;
+	let sliderWidth = slider.getBoundingClientRect().width;
 	let counter = 0;
+	let slideWidth;
 
 	let numberOfItens = sliderOptions.amountOfItens || 1;
 	let mobileSize = window.matchMedia(sliderOptions.breakpoint);
 
-	// Pega todos os siblings do elemento desejado.
+	/* Return all the siblings of the desired element. */
 	const getSiblings = elem => {
 		let siblings = [];
 		let sibling = elem.parentNode.firstChild;
@@ -26,27 +26,21 @@ const customSlider = sliderOptions => {
 		return siblings;
 	}
 
-	/*
-	 * Setting width of the content holder
-	*/
+	/* Width of the content container. */
 	const applyContentWidth = () => {
 		let contentWidth = sliderWidth * sliderLength;
-		sliderWrapper.style.width = contentWidth + 'px';
+		requestAnimationFrame(() => sliderWrapper.style.width = contentWidth + 'px');
 	}
 
 	applyContentWidth();
 
-	/* Define uma largura para cada item do slider, ao dividir a largura ocupada atualmente pelo número de itens. */
-	for (let index = 0, limit = sliderLength; index < limit; index++) {
-		let currentSlide = slides[index];
-
-		let setSlideWidth = () => {
-			let slideWidth = parseFloat(sliderWidth) / numberOfItens;
-			currentSlide.style.width = slideWidth + 'px';
-		}
-
-		setSlideWidth();
-	}
+	/* Set an width for each item of the slider, by dividing the slider width by the number of existing itens. */
+	requestAnimationFrame(() => {
+		slides.forEach(slideItem => {
+			slideWidth = parseFloat(sliderWidth) / numberOfItens;
+			slideItem.style.width = slideWidth + 'px';
+		});
+	});
 
 	/**
 	 * Se o contador atingir o mesmo valor que a quantidade de itens no slider,
@@ -66,11 +60,14 @@ const customSlider = sliderOptions => {
 			counter = sliderLength - numberOfItens; // "volte o número de itens que tenho em tela"
 		}
 
-		/* Passa de slide em slide. */
+		/* Slide */
 		for (let index = 0, limit = sliderLength; index < limit; index++) {
 			let currentSlide = slides[index];
-			currentSlide.style.transform = 'translate3d(-' + (counter * 100) +'%, 0, 0)';
-			currentSlide.style.webkitTransform = 'translate3d(-' + (counter * 100) +'%, 0, 0)';
+
+			requestAnimationFrame(() => {
+				currentSlide.style.transform = 'translate3d(-' + (counter * 100) +'%, 0, 0)';
+				currentSlide.style.webkitTransform = 'translate3d(-' + (counter * 100) +'%, 0, 0)';
+			})
 
 			let sliderDots = Array.from(slider.querySelectorAll('.slide-dots .dots'));
 
@@ -89,7 +86,7 @@ const customSlider = sliderOptions => {
 		}
 	}
 
-	/* Checa se o elemento está em tela. */
+	/* Check if the element is visible on screen. */
 	if('IntersectionObserver' in window){
 		let options = {
 			root: slider,
@@ -100,12 +97,13 @@ const customSlider = sliderOptions => {
 			entries.forEach(entry => {
 				if(entry.isIntersecting === true){
 					let currentSlide = entry.target;
-					let currentSlideSiblings = getSiblings(currentSlide);
 
 					let removeActiveFromSiblings = () => {
-						currentSlideSiblings.forEach(currentSlideSibling => {
-							currentSlideSibling.classList.remove('current-slide');
-						});
+						let lastSlideActive = document.querySelector('.siberian-content-item.current-slide');
+
+						if(lastSlideActive){
+							lastSlideActive.classList.remove('current-slide');
+						}
 
 						currentSlide.classList.add('current-slide');
 					}
@@ -119,110 +117,58 @@ const customSlider = sliderOptions => {
 		slides.forEach(slideItem => observer.observe(slideItem));
 	}
 
-	/* A very simple "swipe" */
+	/* Swipe */
 	const swipe = () => {
 		if(mobileSize.matches){
+			let touchPositionX = 0;
+
 			slider.addEventListener('touchstart', e => {
-				let screenWidth = window.innerWidth;
-				let touchPositionX = e.touches[0].clientX; // 'touches' é necessário para reconhecer o uso de touch na tela mobile.
-	
-				if(touchPositionX > (screenWidth / 2)){
+				touchPositionX = e.touches[0].clientX; // 'touches' is necessary for touch usage in mobile screens.
+			});
+
+			slider.addEventListener('touchend', e => {
+				console.log(e.touches[0].clientX);
+				console.log(touchPositionX);
+			});
+		}
+
+		else {
+			let clickPositionX = 0;
+
+			sliderWrapper.addEventListener('mousedown', e => {
+				clickPositionX = e.clientX;
+			});
+
+			// então, aplicando o mousemove para o movimento
+			sliderWrapper.addEventListener('mousemove', e => {
+				if(clickPositionX !== 0){
+					// console.log(clickPositionX - e.clientX);
+				}
+			});
+
+			sliderWrapper.addEventListener('mouseup', e => {
+				let safeArea = slideWidth * 0.1; // avoiding accidental movement.
+
+				// clique inicial - clique final
+				clickPositionX -= e.clientX;
+				// console.log(clickPositionX, safeArea);
+
+				if(clickPositionX > safeArea){
 					counter++;
 					carousel();
 				}
-	
-				else {
+
+				else if(clickPositionX < (safeArea * -1)) {
 					counter--;
 					carousel();
 				}
-			});
-		}
-	
-		else {
-			sliderWrapper.addEventListener('mousedown', e => {
-				let screenWidth = window.innerWidth;
-				let clickPositionX = e.clientX;
-	
-				if(clickPositionX > (screenWidth / 2)){
-				  counter++;
-				  carousel();
-				}
-	
-				else {
-				  counter--;
-				  carousel();
-				}
+
+				clickPositionX = 0; // returning to the initial state.
 			});
 		}
 	}
 
 	swipe();
-
-	/* New swipe, requires more adjustments */
-	// const swipe = () => {
-	// 	let pressed = false; // signals that the mouse button was pressed.
-	// 	let startx;
-	// 	let x;
-
-	// 	slider.addEventListener('mousedown', e => {
-	// 		pressed = true;
-	// 		console.log(e, e.target);
-
-	// 		/**
-	// 		 * offsetX -> retorna as coordenadas no eixo x, do ponto clicado.
-	// 		 * offsetLeft -> retorna a posição 'left' em pixels, relativo ao offsetParent (pai que possui qualquer position que não seja 'static'.)
-	// 		 */
-	// 		startx = e.offsetX - sliderWrapper.offsetLeft;
-
-	// 		console.log(startx);
-	// 		console.log(sliderWrapper, sliderWrapper.offsetLeft);
-	// 		console.log(sliderWidth);
-
-	// 		slider.style.cursor = 'grabbing';
-	// 	});
-
-	// 	slider.addEventListener('mouseup', e => {
-	// 		slider.style.cursor = 'grab';
-	// 		pressed = false;
-	// 	});
-
-	// 	slider.addEventListener('mousemove', e => {
-	// 		e.preventDefault();
-
-	// 		if(!pressed){
-	// 			return;
-	// 		}
-
-	// 		x = e.offsetX;
-
-	// 		/*
-	// 			Pegar a largura do item no slider e pegar a
-	// 			porcentagem que x - startx representa desse valor.
-	// 		*/
-	// 		let percentage = Math.ceil(((x - startx) / (sliderWidth)) * 100);
-	// 		// console.log(x - startx);
-	// 		console.log("percentage is: " + percentage + "%");
-	// 		console.log(percentage);
-
-	// 		// aplicando o transform em cada item.
-	// 		sliderWrapper.querySelectorAll('.siberian-content-item').forEach(item =>{
-	// 			item.style.transform = `translate3d(${percentage}%, 0, 0)`;
-	// 		});
-
-	// 		// aplicando o transform no pai, causa quebras.
-	// 		// sliderWrapper.style.transform = `translate3d(${percentage}%, 0, 0)`;
-
-	// 		checkBoundary();
-	// 	});
-
-	// 	let checkBoundary = () => {
-	// 		let outer = slider.getBoundingClientRect();
-	// 		let inner = slider.getBoundingClientRect();
-	// 		// console.log();
-	// 	}
-	// }
-
-	// swipe();
 
 	/* Arrows */
 	if(sliderOptions.hasArrows){
@@ -249,26 +195,27 @@ const customSlider = sliderOptions => {
 	if(sliderOptions.hasDots){
 		const applyDots = () => {
 			let dots = Array.from(slider.querySelectorAll('.slide-dots .dots'));
-			// console.log(dots);
 
 			if(dots.length){
 				// Alternando ao item do slide desejado, ao clicar no dot correspondente.
 				dots.forEach(dot => {
-					let dotSiblings = getSiblings(dot);
 					let dotsItemDataset = parseInt(dot.dataset.dotsIndex); // Pegando a posição do item, de acordo com o index no dataset.
 
 					/**
 					 * 1) Definindo o counter do slider para o valor do index no item.
 					 * 2) Reinicializando o carousel, para aplicar a alteração.
 					 */
-					dot.addEventListener('click', function(){
+					dot.addEventListener('click', () => {
 						counter = dotsItemDataset;
 						carousel();
 
-						dotSiblings.forEach(function(dotSibling){
-							dotSibling.classList.remove('active');
-							dot.classList.add('active');
-						});
+						let lastDotActive = document.querySelector('.dots.active');
+
+						if(lastDotActive){
+							lastDotActive.classList.remove('active');
+						}
+
+						dot.classList.add('active');
 					});
 				});
 			}
@@ -281,7 +228,7 @@ const customSlider = sliderOptions => {
 					for(let index = 0, limit = sliderLength; index < limit; index++){
 						let dotsItem = document.createElement('div');
 
-						/* Caso seja o primeiro dot criado, adicionar a classe 'active'. */
+						/* If it is the first dot created, add the class 'active'. */
 						if(index === 0){
 							dotsItem.setAttribute('class', 'dots active');
 						}
@@ -295,6 +242,8 @@ const customSlider = sliderOptions => {
 					}
 
 					slider.appendChild(dotsWrapper);
+
+					applyDots(); // applying the events in the newly created 'dots'.
 				}
 
 				createDotsItem();
@@ -307,6 +256,7 @@ const customSlider = sliderOptions => {
 
 const sliderOptions = {
 	selector: '.siberian',
+    selectorWrapper: '.siberian-content',
 	breakpoint: 'max-width(480px)',
 	amountOfItens: 1,
 	hasArrows: true,
@@ -314,11 +264,7 @@ const sliderOptions = {
 }
 
 window.addEventListener('resize', () => {
-	customSlider(sliderOptions);
+	siberian(sliderOptions);
 });
 
-window.addEventListener('load', () => {
-	customSlider(sliderOptions);
-});
-
-customSlider(sliderOptions);
+siberian(sliderOptions);

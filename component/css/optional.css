@@ -1,0 +1,12 @@
+body {
+    font-family: 'Raleway', sans-serif;
+    display: flex;
+    align-items: center;
+}
+
+html,
+body {
+    background: #202020 !important;
+    min-height: 100vh;
+    overflow-x: hidden;
+}

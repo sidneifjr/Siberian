@@ -1,22 +1,25 @@
 {
   "name": "siberian",
+  "author": "Sidnei Farias Júnior",
+  "description": "A simple slider, built with vanilla Javascript.",
   "version": "1.0.1",
-  "description": "Custom slider, using vanilla Javascript.",
-  "main": "main.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
+  "main": "siberian.js",
+  "files": [
+    "./css/"
+  ],
+  "homepage": "https://github.com/sidneifjr/Siberian",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/sidneifjr/Siberian.git"
   },
   "keywords": [
-    "siberian"
+    "siberian", "slider"
   ],
-  "author": "Sidnei Farias Júnior",
   "license": "ISC",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
   "bugs": {
     "url": "https://github.com/sidneifjr/Siberian/issues"
-  },
-  "homepage": "https://github.com/sidneifjr/Siberian"
+  }
 }
