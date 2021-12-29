@@ -2,17 +2,15 @@
 
 A simple slider, built with vanilla Javascript.
 
-## Installation
+### Installation
 
 ```
 npm install siberian
 ```
 
-## Usage
+### Usage
 
-### HTML
-
-It's recommended to have an HTML markup similar as below:
+It's recommended to have an HTML markup defined as below:
 
 ```
 <div class="siberian">
@@ -28,14 +26,12 @@ It's recommended to have an HTML markup similar as below:
 
 Obs.: The "data-item" attribute must be numbered for each item in your slider (0, 1, 2, 3, etcetera).
 
-### Javascript
-
-In your main js file, create a **sliderOptions** object, with the following parameters:
+Then, in your main **js** file, create a **sliderOptions** object, with the following parameters:
 
 ```
 const sliderOptions = {
 	selector: '.siberian',
-  selectorWrapper: '.siberian-content',
+	selectorWrapper: '.siberian-content',
 	breakpoint: 'max-width(480px)', // for mobile screens.
 	amountOfItens: 1,
 	hasArrows: true,

@@ -2,7 +2,7 @@
   "name": "siberian",
   "author": "Sidnei Farias Júnior",
   "description": "A simple slider, built with vanilla Javascript.",
-  "version": "1.0.1",
+  "version": "1.0.3",
   "main": "siberian.js",
   "files": [
     "./css/"
