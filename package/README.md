@@ -10,6 +10,8 @@ npm install siberian
 
 ### Usage
 
+First, import **runtime.js** and **siberian.js** files from your **node_modules** folder.
+
 It's recommended to have an HTML markup defined as below:
 
 ```

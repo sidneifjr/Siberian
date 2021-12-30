@@ -1,8 +1,7 @@
 {
-  "name": "siberian",
+  "name": "teste-siberian",
   "author": "Sidnei Farias Júnior",
-  "description": "A simple slider, built with vanilla Javascript.",
-  "version": "1.0.4",
+  "description": "Made for siberian version testing.",
   "main": "main.js",
   "homepage": "https://github.com/sidneifjr/Siberian",
   "repository": {
@@ -10,7 +9,8 @@
     "url": "git+https://github.com/sidneifjr/Siberian.git"
   },
   "keywords": [
-    "siberian", "slider"
+    "siberian",
+    "slider"
   ],
   "license": "ISC",
   "scripts": {
@@ -20,7 +20,7 @@
     "deploy": "gh-pages -d build"
   },
   "dependencies": {
-    "siberian": "^1.0.3"
+    "siberian": "^1.0.6"
   },
   "devDependencies": {
     "@babel/core": "^7.11.0",

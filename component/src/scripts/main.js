@@ -1,4 +1,5 @@
-import { siberian } from './siberian';
+import '../../node_modules/siberian/runtime'; // for testing
+import { siberian } from '../../node_modules/siberian/siberian'; // for testing
 import '../styles/main.scss';
 
 const sliderOptions = {
@@ -11,4 +12,3 @@ const sliderOptions = {
 }
 
 siberian(sliderOptions);
-
