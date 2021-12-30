@@ -1,4 +1,5 @@
-const siberian = require('siberian');
+import { siberian } from './siberian';
+import '../styles/main.scss';
 
 const sliderOptions = {
 	selector: '.siberian',
@@ -6,7 +7,8 @@ const sliderOptions = {
 	breakpoint: 'max-width(480px)',
 	amountOfItens: 1,
 	hasArrows: true,
-	hasDots: true
+	hasDots: true,
 }
 
 siberian(sliderOptions);
+

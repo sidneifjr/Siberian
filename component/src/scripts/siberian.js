@@ -254,17 +254,4 @@ const siberian = sliderOptions => {
 	}
 }
 
-const sliderOptions = {
-	selector: '.siberian',
-    selectorWrapper: '.siberian-content',
-	breakpoint: 'max-width(480px)',
-	amountOfItens: 1,
-	hasArrows: true,
-	hasDots: true
-}
-
-window.addEventListener('resize', () => {
-	siberian(sliderOptions);
-});
-
-siberian(sliderOptions);
+module.exports.siberian = siberian;

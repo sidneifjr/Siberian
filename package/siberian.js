@@ -1,6 +1,3 @@
-import './css/reset.css';
-import './css/siberian.css';
-
 const siberian = sliderOptions => {
 	let slider = document.querySelector(sliderOptions.selector);
 	let sliderWrapper = slider.querySelector(sliderOptions.selectorWrapper);
@@ -257,4 +254,4 @@ const siberian = sliderOptions => {
 	}
 }
 
-module.exports = siberian;
+module.exports.siberian = siberian;
