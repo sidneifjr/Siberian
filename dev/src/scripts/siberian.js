@@ -71,7 +71,7 @@ const siberian = sliderOptions => {
 
 			let sliderDots = Array.from(slider.querySelectorAll('.slide-dots .dots'));
 
-			if(sliderDots){
+			if(sliderDots !== false){
 				let sliderCurrentDotSiblings = getSiblings(sliderDots[counter]);
 
 				// Adiciona active ao dot correspondente ao slider atual, após remover o active dos outros, caso existam.
@@ -176,16 +176,23 @@ const siberian = sliderOptions => {
 			let prev = slider.querySelector('.prev');
 			let next = slider.querySelector('.next');
 
-			// 	Controles do slider.
-			next.addEventListener('click', () => {
-				counter++;
-				carousel();
-			});
+			if(sliderLength <= 3){
+				prev.style.display = "none";
+				next.style.display = "none";
+			}
 
-			prev.addEventListener('click', () => {
-				counter--;
-				carousel();
-			});
+			else {
+				// 	Controles do slider.
+				next.addEventListener('click', () => {
+					counter++;
+					carousel();
+				});
+
+				prev.addEventListener('click', () => {
+					counter--;
+					carousel();
+				});
+			}
 		}
 
 		applyArrows();
@@ -216,6 +223,10 @@ const siberian = sliderOptions => {
 						}
 
 						dot.classList.add('active');
+
+						if(sliderLength <= 3){
+							dot.style.display = "none";;
+						}
 					});
 				});
 			}
