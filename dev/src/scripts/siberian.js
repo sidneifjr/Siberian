@@ -90,11 +90,13 @@ const siberian = sliderOptions => {
 	if('IntersectionObserver' in window){
 		let options = {
 			root: slider,
-			threshold: 1
+			threshold: 0.5
 		}
 
 		const checkIfItemIsCurrentlyVisible = entries => {
 			entries.forEach(entry => {
+        console.log(entry);
+
 				if(entry.isIntersecting === true){
 					let currentSlide = entry.target;
 
@@ -114,6 +116,7 @@ const siberian = sliderOptions => {
 		}
 
 		let observer = new IntersectionObserver(checkIfItemIsCurrentlyVisible, options);
+    // observer.root.style.border = "2px solid #44aa44";
 		slides.forEach(slideItem => observer.observe(slideItem));
 	}
 
@@ -224,9 +227,9 @@ const siberian = sliderOptions => {
 
 						dot.classList.add('active');
 
-						// if(sliderLength <= 3){
-						// 	dot.style.display = "none";;
-						// }
+						if(sliderLength <= 3){
+							dot.style.display = "none";;
+						}
 					});
 				});
 			}

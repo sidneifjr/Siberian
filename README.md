@@ -10,7 +10,7 @@ npm install siberian
 
 ### Usage
 
-First, import **runtime.js** and **siberian.js** files from your **node_modules** folder.
+First, import **siberian.js** files from your **node_modules** folder.
 
 It's recommended to have an HTML markup defined as below:
 
@@ -26,9 +26,9 @@ It's recommended to have an HTML markup defined as below:
 </div>
 ```
 
-Obs.: The "data-item" attribute must be numbered for each item in your slider (0, 1, 2, 3, etcetera).
+It's important to note that the "data-item" attribute must be numbered for each item in your slider (0, 1, 2, 3, etcetera).
 
-Then, in your main **js** file, create a **sliderOptions** object, with the following parameters:
+Then, in your main **js** file, create a **sliderOptions** object, with the following attributes:
 
 ```
 const sliderOptions = {
@@ -41,7 +41,7 @@ const sliderOptions = {
 }
 ```
 
-Then, use it as a argument for the **siberian** function.
+You can use it as a argument for the **siberian** function:
 
 ```
   siberian(sliderOptions);

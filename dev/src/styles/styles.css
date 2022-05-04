@@ -115,7 +115,6 @@ body {
 .siberian-content-item {
 	width: 100%;
 	max-width: 100%;
-  border-radius: 15px;
   padding: 240px 20px;
   position: relative;
   display: flex;
