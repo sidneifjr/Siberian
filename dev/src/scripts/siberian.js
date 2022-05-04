@@ -224,9 +224,9 @@ const siberian = sliderOptions => {
 
 						dot.classList.add('active');
 
-						if(sliderLength <= 3){
-							dot.style.display = "none";;
-						}
+						// if(sliderLength <= 3){
+						// 	dot.style.display = "none";;
+						// }
 					});
 				});
 			}

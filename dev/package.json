@@ -2,7 +2,8 @@
   "name": "dev-siberian",
   "author": "Sidnei Farias Júnior",
   "description": "Made for siberian version testing.",
-  "main": "main.js",
+  "source": "src/index.html",
+  "browserslist": "> 0.5%, last 2 versions, not dead",
   "homepage": "https://github.com/sidneifjr/Siberian",
   "repository": {
     "type": "git",
@@ -14,12 +15,11 @@
   ],
   "license": "ISC",
   "scripts": {
-    "start": "webpack-dev-server --open --config webpack.dev.js",
-    "build": "webpack --config webpack.prod.js",
-    "watch": "webpack --watch"
+    "start": "yarn parcel src/index.html --port=3000 --open",
+    "build": "parcel build src/index.html"
   },
   "dependencies": {
-    "siberian": "^1.0.6"
+    "parcel": "^2.5.0"
   },
   "devDependencies": {
     "@babel/core": "^7.11.0",
