@@ -74,17 +74,17 @@ img {
 }
 
 body {
-    font-family: 'Raleway', sans-serif;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  font-family: 'Raleway', sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 html,
 body {
-    background: #202020 !important;
-    min-height: 100vh;
-    overflow-x: hidden;
+  background: #202020 !important;
+  min-height: 100vh;
+  overflow-x: hidden;
 }
 
 .siberian {

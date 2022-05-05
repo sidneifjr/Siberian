@@ -6,6 +6,8 @@ const siberian = sliderOptions => {
 	let sliderWidth = slider.getBoundingClientRect().width;
 	let counter = 0;
 	let slideWidth;
+  let marginRight = sliderOptions.marginRight || 0;
+  let marginLeft = sliderOptions.marginLeft || 0;
 
 	let numberOfItens = sliderOptions.amountOfItens || 1;
 	let mobileSize = window.matchMedia(sliderOptions.breakpoint);
@@ -38,7 +40,15 @@ const siberian = sliderOptions => {
 	requestAnimationFrame(() => {
 		slides.forEach(slideItem => {
 			slideWidth = parseFloat(sliderWidth) / numberOfItens;
-			slideItem.style.width = slideWidth + 'px';
+			slideItem.style.width = slideWidth - marginRight - marginLeft + 'px';
+
+      if(marginRight !== 0){
+        slideItem.style.marginRight = marginRight + 'px';
+      }
+
+      if(marginLeft !== 0){
+        slideItem.style.marginLeft = marginLeft + 'px';
+      }
 		});
 	});
 
@@ -67,7 +77,7 @@ const siberian = sliderOptions => {
 			requestAnimationFrame(() => {
 				currentSlide.style.transform = 'translate3d(-' + (counter * 100) +'%, 0, 0)';
 				currentSlide.style.webkitTransform = 'translate3d(-' + (counter * 100) +'%, 0, 0)';
-			})
+			});
 
 			let sliderDots = Array.from(slider.querySelectorAll('.slide-dots .dots'));
 
@@ -95,8 +105,6 @@ const siberian = sliderOptions => {
 
 		const checkIfItemIsCurrentlyVisible = entries => {
 			entries.forEach(entry => {
-        console.log(entry);
-
 				if(entry.isIntersecting === true){
 					let currentSlide = entry.target;
 
